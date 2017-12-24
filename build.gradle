@@ -1,0 +1,60 @@
+project.ext {
+   //spring boot version
+   springBootVersion = "1.5.6.RELEASE"
+   lombokVersion = "1.14.8"
+   springDataVersion = "1.4.1.RELEASE"
+   springVersion = "4.1.6.RELEASE"
+   jodaVersion = "2.9.2"
+   lombokVersion = "1.14.8"
+   javaxvalidation = "2.0.0.Final"
+}
+
+/// ---- project varibales and properties -----
+List joda = ["joda-time:joda-time:${jodaVersion}"]
+List lombok = ["org.projectlombok:lombok:${lombokVersion}"]
+List javaxValidation = ["javax.validation:validation-api:${javaxvalidation}"]
+
+
+buildscript {
+   ext {
+      springBootVersion = '1.5.9.RELEASE'
+   }
+   repositories {
+      mavenCentral()
+   }
+   dependencies {
+      classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+   }
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+
+group = 'com.handyman'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+repositories {
+   mavenCentral()
+}
+
+
+dependencies {
+   compile('org.springframework.boot:spring-boot-starter')
+   testCompile('org.springframework.boot:spring-boot-starter-test')
+}
+
+subprojects {
+   apply plugin: 'java'
+   apply plugin: 'groovy'
+
+   repositories {
+      mavenCentral()
+   }
+
+   dependencies {
+      compile joda, lombok, javaxValidation
+   }
+}
+
