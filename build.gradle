@@ -7,12 +7,31 @@ project.ext {
    jodaVersion = "2.9.2"
    lombokVersion = "1.14.8"
    javaxvalidation = "2.0.0.Final"
+   springBootVersion = "1.4.0.RELEASE"
+   springVersion = "4.3.2.RELEASE"
 }
 
 /// ---- project varibales and properties -----
 List joda = ["joda-time:joda-time:${jodaVersion}"]
 List lombok = ["org.projectlombok:lombok:${lombokVersion}"]
 List javaxValidation = ["javax.validation:validation-api:${javaxvalidation}"]
+
+List springBoot = ["org.springframework.boot:spring-boot-loader:${project.springBootVersion}",
+                   "org.springframework.boot:spring-boot-starter-web:${project.springBootVersion}",
+                   //"org.springframework.hateoas:spring-hateoas:${project.springHateoasVersion}",
+                   //"org.springframework.plugin:spring-plugin-core:${project.springPluginVersion}",
+                   "org.springframework:spring-tx:4.1.4.RELEASE",
+                   "org.springframework.boot:spring-boot-starter-web",
+                   "org.springframework.boot:spring-boot-configuration-processor"
+]
+
+List springAll = ["org.springframework:spring-core:${project.springVersion}",
+                  "org.springframework:spring-jdbc:${project.springVersion}",
+                  "org.springframework:spring-aop:${project.springVersion}",
+                  "org.springframework:spring-beans:${project.springVersion}",
+                  "org.springframework:spring-context:${project.springVersion}"
+]
+
 
 
 buildscript {
@@ -57,4 +76,25 @@ subprojects {
       compile joda, lombok, javaxValidation
    }
 }
+
+project(':commons') {
+   project('models') {
+   }
+}
+
+project(':api') {
+   apply plugin: 'org.springframework.boot'
+
+   dependencies {
+      compile project(':commons:models')
+      compile springBoot, springAll
+   }
+
+   //boot repackage to build a war /jar
+   bootRepackage {
+      mainClass = 'HandyManApiMain'
+   }
+}
+
+
 

@@ -5,14 +5,14 @@ import com.handyman.models.interfaces.orders.OrderCustomerSnapshot;
 
 import java.util.List;
 
-public interface User<P extends PersonalInfo, O extends OrderCustomerSnapshot> {
+public interface User {
 
    String getUserType();
    String getUserId();
 
    //basic user information
-   P getPersonalInfo();
+   PersonalInfo getPersonalInfo();
 
    //User orders
-   List<O> getOrdersSnapshot();
+   List<? extends OrderCustomerSnapshot> getOrdersSnapshot();
 }
