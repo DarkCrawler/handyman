@@ -5,7 +5,6 @@ import lombok.Data;
 
 @Data
 public class AddressImpl implements Address {
-   String addressType;
    String addressLine1;
    String addressList2;
    String city;

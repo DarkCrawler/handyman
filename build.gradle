@@ -9,6 +9,7 @@ project.ext {
    javaxvalidation = "2.0.0.Final"
    springBootVersion = "1.4.0.RELEASE"
    springVersion = "4.3.2.RELEASE"
+   springdata = "2.0.2.RELEASE"
 }
 
 /// ---- project varibales and properties -----
@@ -30,6 +31,9 @@ List springAll = ["org.springframework:spring-core:${project.springVersion}",
                   "org.springframework:spring-aop:${project.springVersion}",
                   "org.springframework:spring-beans:${project.springVersion}",
                   "org.springframework:spring-context:${project.springVersion}"
+]
+
+List springData = ["org.springframework.data:spring-data-mongodb:${project.springdata}"
 ]
 
 
@@ -79,6 +83,16 @@ subprojects {
 
 project(':commons') {
    project('models') {
+      dependencies {
+         compile springData
+      }
+   }
+}
+
+project(':mongo') {
+   dependencies {
+      compile springData
+      compile project(':commons:models')
    }
 }
 
@@ -87,6 +101,7 @@ project(':api') {
 
    dependencies {
       compile project(':commons:models')
+      compile project(':mongo')
       compile springBoot, springAll
    }
 

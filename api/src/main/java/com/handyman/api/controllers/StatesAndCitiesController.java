@@ -13,7 +13,6 @@ public class StatesAndCitiesController {
    @Resource StatesAndCityRepoService statesAndCityRepoService;
 
    @RequestMapping(method = RequestMethod.GET, value = "/getListOfStates", produces = "application/json")
-   @CrossOrigin(origins = "http://localhost:8000")
    public Set getStates() {
       Set states = statesAndCityRepoService.getSetOfStates();
       log.info("REST API call : getstates : results length:" + states.size());
@@ -21,7 +20,6 @@ public class StatesAndCitiesController {
    }
 
    @RequestMapping(method = RequestMethod.GET, value = "/getOpsCity", produces = "application/json")
-   @CrossOrigin(origins = "http://localhost:8000")
    public Set getOperationCities(@RequestParam("state") String state) {
       Set operationCities = statesAndCityRepoService.getListOfoperationCitiesForState(state);
       log.info("REST API call: get operationcities : results length:" + operationCities.size());

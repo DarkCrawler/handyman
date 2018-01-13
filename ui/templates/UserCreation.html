@@ -8,6 +8,7 @@
 <script src="../javascript/app/userCreationJS.js"></script>
 <script src="../javascript/vendor/bootstrap.js"></script>
 <script src="../javascript/vendor/loadash.js"></script>
+<link rel="stylesheet" type="text/css" href="../css/app/forms.css">
 </head>
 <body>
 <div class="jumbotron">
@@ -38,8 +39,7 @@
 </div>
 
 <div class="container" id="userform">
-    <!-- Content here -->
-    <form class="form-horizontal">
+    <form class="form-horizontal" id="user_creation_form">
         <div class="panel panel-primary">
             <div class="panel-heading">
                 User Info
@@ -47,35 +47,46 @@
             <div class="panel-body">
                 <div class="form-group row">
                     <div class="col-md-2">
-                        <input type="text" class="form-control" id="firstName" placeholder="Enter First Name">
+                        <input type="text" class="form-control" id="firstName" placeholder="Enter First Name"
+                               pattern="[a-zA-Z]{*}" title="First name should only contain alphabets"
+                               required value="Tushar">
                     </div>
 
                     <div class="col-md-2">
-                        <input type="text" class="form-control" id="middleName" placeholder="Enter Middle Name">
+                        <input type="text" class="form-control" id="middleName" placeholder="Enter Middle Name"
+                               pattern="[a-zA-Z]{*}" title="Middle  name should only contain alphabets">
                     </div>
 
                     <div class="col-md-2">
-                        <input type="text" class="form-control" id="lastName" placeholder="Enter Last Name">
+                        <input type="text" class="form-control" id="lastName" placeholder="Enter Last Name"
+                               pattern="[a-zA-Z]{*}" title="Last name should only contain alphabets"
+                               required value="Bisht">
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <div class="col-md-3">
                         <input type="text" class="form-control" id="primaryMobile"
-                               placeholder="Enter Primary Mobile Number">
+                               placeholder="Enter Primary Mobile Number" pattern="[0-9]{10}"
+                               title="Primary mobile number can only have digits with length uptil 10" required value="8971030030">
                     </div>
 
                     <div class="col-md-3">
                         <input type="text" class="form-control" id="secondaryMobile"
-                               placeholder="Enter Secondary Mobile Number">
+                               placeholder="Enter Secondary Mobile Number" pattern="[0-9]{10}"
+                               title="Secondary  mobile number can only have digits with length uptil 10">
                     </div>
 
                 </div>
 
                 <div class="form-group">
                     <div class="col-md-5">
-                        <input type="email" class="form-control" id="email" placeholder="Enter email">
+                        <input type="email" class="form-control" id="email" placeholder="Enter email" required
+                               title="Email id should be of valid format" value="tushar.bisht1-@gmail.com">
                     </div>
+                    <span id="emailExists" class="alert-danger" style="display: none"> <img
+                            src="../images/form_false.png"
+                            class="form_err_img"> Oops!! email already exists in the record</span>
                 </div>
             </div>
         </div>
@@ -87,13 +98,15 @@
             <div class="panel-body">
                 <div class="form-group">
                     <div class="col-md-3">
-                        <input type="password" class="form-control" id="pwd" placeholder="Enter password">
+                        <input type="password" class="form-control" id="pwd" placeholder="Enter password" required
+                               pattern="^.{6,}" title="Password must be minimum of 6 characters" value="unixlover">
                     </div>
                 </div>
 
                 <div class="form-group">
                     <div class="col-md-3">
-                        <input type="password" class="form-control" id="cnfpwd" placeholder="Confirm password">
+                        <input type="password" class="form-control" id="pwd_confirm" placeholder="Confirm password"
+                               onfocusout="checkPasswordMatch()" value="unixlover">
                     </div>
                 </div>
 
@@ -108,17 +121,24 @@
             <div class="panel-body">
                 <div class="form-group row">
                     <div class="col-md-5">
-                        <input type="text" class="form-control" id="addressLine1" placeholder="Address Line 1">
+                        <input type="text" class="form-control" id="addressLine1" placeholder="Address Line 1" required value="addr line 1">
                     </div>
 
                     <div class="col-md-5">
-                        <input type="text" class="form-control" id="addressLine2" placeholder="Address Line 2">
+                        <input type="text" class="form-control" id="addressLine2" placeholder="Address Line 2" required value="addr line 2">
                     </div>
                 </div>
 
                 <div class="form-group row">
+                    <div class="col-md-5">
+                        <input type="text" class="form-control" id="landmark" placeholder="Landmark" value="ladmark 1">
+                    </div>
+
+                </div>
+
+                <div class="form-group row">
                     <div class="col-md-3">
-                        <select class="form-control" id="state">
+                        <select class="form-control" id="state" required>
                             <option>Select State</option>
                         </select>
                     </div>
@@ -138,7 +158,8 @@
 
                 <div class="form-group row">
                     <div class="col-md-2">
-                        <input type="text" class="form-control" id="pincode" placeholder="Pin Code">
+                        <input type="text" class="form-control" id="pincode" placeholder="Pin Code" pattern="[0-9]{6}"
+                               title="Pin code should be 6 digit long, with only numbers" value="226025">
                     </div>
                 </div>
 
@@ -146,20 +167,34 @@
         </div>
 
         <div class="form-group" align="center">
-            <button type="button" class="btn btn-primary">Submit</button>
+            <button type="button" class="btn btn-primary" id="formSubmit">Submit</button>
         </div>
-
     </form>
 </div>
+
 
 <script>
     $(document).ready(function () {
         populateStateDropDown();
+        addListeners();
     });
 
     $("#state").change(function () {
         populateOperationCityDropDown();
     });
+
+    $("#formSubmit").click(function(){           
+            submitUserCreationForm();
+    });
+
+    /*$("form").submit(function () {
+        if (formValidates()) {
+            submitUserCreationForm();
+        } else {
+            return false;
+        }
+    });*/
+
 
 </script>
 
