@@ -16,11 +16,12 @@ public class UserLayerDao {
    UserRepository userRepository;
 
    public String addUser(User user) {
-      return null;
+      userRepository.save(user);
+      return user.getUserId();
    }
 
    public List<String> addUser(List<User> users) {
-      List<String> responses = new ArrayList<String>();
+      List<String> responses = new ArrayList<>();
       for (User u : users) {
          responses.add(addUser(u));
       }

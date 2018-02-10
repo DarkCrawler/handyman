@@ -1,6 +1,6 @@
 project.ext {
    //spring boot version
-   springBootVersion = "1.5.6.RELEASE"
+   springBootVersion = "1.5.9.RELEASE"
    lombokVersion = "1.14.8"
    springDataVersion = "1.4.1.RELEASE"
    springVersion = "4.1.6.RELEASE"
@@ -19,11 +19,9 @@ List javaxValidation = ["javax.validation:validation-api:${javaxvalidation}"]
 
 List springBoot = ["org.springframework.boot:spring-boot-loader:${project.springBootVersion}",
                    "org.springframework.boot:spring-boot-starter-web:${project.springBootVersion}",
-                   //"org.springframework.hateoas:spring-hateoas:${project.springHateoasVersion}",
-                   //"org.springframework.plugin:spring-plugin-core:${project.springPluginVersion}",
                    "org.springframework:spring-tx:4.1.4.RELEASE",
                    "org.springframework.boot:spring-boot-starter-web",
-                   "org.springframework.boot:spring-boot-configuration-processor"
+                   "org.springframework.boot:spring-boot-configuration-processor:${project.springBootVersion}"
 ]
 
 List springAll = ["org.springframework:spring-core:${project.springVersion}",
@@ -53,6 +51,11 @@ buildscript {
 apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
+
+
+bootRepackage {
+   enabled = false
+}
 
 group = 'com.handyman'
 version = '0.0.1-SNAPSHOT'
@@ -92,6 +95,7 @@ project(':commons') {
 project(':mongo') {
    dependencies {
       compile springData
+      compile springBoot
       compile project(':commons:models')
    }
 }
