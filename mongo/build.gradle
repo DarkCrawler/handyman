@@ -1,0 +1,22 @@
+apply plugin: 'org.springframework.boot'
+
+bootRepackage {
+   enabled = true
+}
+
+dependencies {
+   compile rootProject.springData
+   compile rootProject.springBoot
+   compile project(':commons:models')
+}
+
+jar {
+   baseName = 'handymanMongo'
+   version = rootProject.projectVersion
+   manifest {
+      attributes(
+              'Main-Class': 'MongoMain'
+      )
+   }
+}
+

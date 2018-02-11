@@ -1,0 +1,6 @@
+
+project('models') {
+   dependencies {
+      compile rootProject.springData
+   }
+}
