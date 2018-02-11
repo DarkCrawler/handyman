@@ -1,5 +1,6 @@
 project.ext {
    //spring boot version
+   projectVersion = "0.1"
    springBootVersion = "1.5.9.RELEASE"
    lombokVersion = "1.14.8"
    springDataVersion = "1.4.1.RELEASE"
@@ -10,28 +11,30 @@ project.ext {
    springBootVersion = "1.4.0.RELEASE"
    springVersion = "4.3.2.RELEASE"
    springdata = "2.0.2.RELEASE"
+   springDataCommon = "1.4.1.RELEASE"
 }
 
 /// ---- project varibales and properties -----
-List joda = ["joda-time:joda-time:${jodaVersion}"]
-List lombok = ["org.projectlombok:lombok:${lombokVersion}"]
-List javaxValidation = ["javax.validation:validation-api:${javaxvalidation}"]
+project.ext.joda = ["joda-time:joda-time:${jodaVersion}"]
+project.ext.lombok = ["org.projectlombok:lombok:${lombokVersion}"]
+project.ext.javaxValidation = ["javax.validation:validation-api:${javaxvalidation}"]
 
-List springBoot = ["org.springframework.boot:spring-boot-loader:${project.springBootVersion}",
-                   "org.springframework.boot:spring-boot-starter-web:${project.springBootVersion}",
-                   "org.springframework:spring-tx:4.1.4.RELEASE",
-                   "org.springframework.boot:spring-boot-starter-web",
-                   "org.springframework.boot:spring-boot-configuration-processor:${project.springBootVersion}"
+project.ext.springBoot = ["org.springframework.boot:spring-boot-loader:${springBootVersion}",
+                          "org.springframework.boot:spring-boot-starter-web:${springBootVersion}",
+                          "org.springframework:spring-tx:4.1.4.RELEASE",
+                          "org.springframework.boot:spring-boot-starter-web",
+                          "org.springframework.boot:spring-boot-configuration-processor:${springBootVersion}"
 ]
 
-List springAll = ["org.springframework:spring-core:${project.springVersion}",
-                  "org.springframework:spring-jdbc:${project.springVersion}",
-                  "org.springframework:spring-aop:${project.springVersion}",
-                  "org.springframework:spring-beans:${project.springVersion}",
-                  "org.springframework:spring-context:${project.springVersion}"
+project.ext.springAll = ["org.springframework:spring-core:${springVersion}",
+                         "org.springframework:spring-jdbc:${springVersion}",
+                         "org.springframework:spring-aop:${springVersion}",
+                         "org.springframework:spring-beans:${springVersion}",
+                         "org.springframework:spring-context:${springVersion}"
 ]
 
-List springData = ["org.springframework.data:spring-data-mongodb:${project.springdata}"
+project.ext.springData = ["org.springframework.data:spring-data-mongodb:${springdata}",
+                          "org.springframework.data:spring-data-commons-core:${springDataCommon}"
 ]
 
 
@@ -50,12 +53,9 @@ buildscript {
 
 apply plugin: 'java'
 apply plugin: 'idea'
-apply plugin: 'org.springframework.boot'
 
 
-bootRepackage {
-   enabled = false
-}
+
 
 group = 'com.handyman'
 version = '0.0.1-SNAPSHOT'
@@ -65,13 +65,7 @@ repositories {
    mavenCentral()
 }
 
-
-dependencies {
-   compile('org.springframework.boot:spring-boot-starter')
-   testCompile('org.springframework.boot:spring-boot-starter-test')
-}
-
-subprojects {
+allprojects {
    apply plugin: 'java'
    apply plugin: 'groovy'
 
@@ -84,36 +78,30 @@ subprojects {
    }
 }
 
-project(':commons') {
-   project('models') {
-      dependencies {
-         compile springData
-      }
-   }
-}
+/*project(':mongo') {
+   apply plugin: 'org.springframework.boot'
 
-project(':mongo') {
    dependencies {
       compile springData
       compile springBoot
       compile project(':commons:models')
    }
-}
+}*/
 
-project(':api') {
+/*project(':api') {
    apply plugin: 'org.springframework.boot'
 
    dependencies {
       compile project(':commons:models')
       compile project(':mongo')
-      compile springBoot, springAll
+      compile project.ext.springBoot, project.ext.springAll
    }
 
    //boot repackage to build a war /jar
    bootRepackage {
       mainClass = 'HandyManApiMain'
    }
-}
+}*/
 
 
 
